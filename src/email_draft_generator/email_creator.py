@@ -22,3 +22,13 @@ def create_email_body(template, company, attachments):
 	encoded_message = base64.urlsafe_b64encode(mime_message.as_bytes()).decode()
 
 	return {"message": {"raw": encoded_message}}
+
+def get_sample_template():
+	"""Returns a sample E-mail template."""
+	return {
+			'subject': "Test E-mail",
+			'body': """This is a template E-mail used to test an E-mail generation program. Please disregard.
+
+company.name: {name}
+company.email: {email}""",
+	}

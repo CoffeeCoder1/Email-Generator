@@ -34,13 +34,7 @@ def main():
 		template = json.load(args.template)
 		print("Template loaded from file")
 	else:
-		template = {
-			'subject': "Test E-mail",
-			'body': """This is a template E-mail used to test an E-mail generation program. Please disregard.
-
-company.name: {name}
-company.email: {email}""",
-		}
+		template = email_draft_generator.email_creator.get_sample_template()
 		print("No template provided! Sample template was used")
 
 	# Authenticate with Google
