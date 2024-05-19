@@ -1,4 +1,4 @@
-import email_draft_generator.file_parser.main
+import email_draft_generator.file_parser.main as main
 
 if __name__ == "__main__":
-	email_draft_generator.file_parser.main.main()
+	main.main()

@@ -1,5 +1,12 @@
 {
 	"subject": "Special offer!!!!",
 	"body": "Dear {name},\nWe are pleased to inform you that your company has been selected for a special offer.\nPlease find attached the details of the offer.\n\nBest regards,\nYour Company",
-	"attachments": ["data/test_pdf.pdf", "data/test_image.png"]
+	"attachments": [
+		{
+			"path": "data/test_pdf.pdf"
+		},
+		{
+			"path": "data/test_image.png"
+		}
+	]
 }

@@ -7,20 +7,20 @@ name = "email_draft_generator"
 version = "0.0.4"
 description = "A utility to generate E-mail drafts from a list of E-mail addresses."
 readme = "README.md"
-license = {file = "LICENSE"}
+license = { file = "LICENSE" }
 requires-python = ">=3.8"
 keywords = ["email", "gmail", "email-template", "email-generator"]
 
 # This should be your name or the name of the organization who originally authored the project, and a valid email address corresponding to the name listed.
 authors = [
-	{name = "Brandon Clague", email = "94200657+fodfodfod@users.noreply.github.com" },
-	{name = "Max Nargang", email = "CoffeeCoder1@outlook.com" }
+	{ name = "Brandon Clague", email = "94200657+fodfodfod@users.noreply.github.com" },
+	{ name = "Max Nargang", email = "CoffeeCoder1@outlook.com" },
 ]
 
 # This should be your name or the names of the organization who currently maintains the project, and a valid email address corresponding to the name listed.
 maintainers = [
-	{name = "Brandon Clague", email = "94200657+fodfodfod@users.noreply.github.com" },
-	{name = "Max Nargang", email = "CoffeeCoder1@outlook.com" }
+	{ name = "Brandon Clague", email = "94200657+fodfodfod@users.noreply.github.com" },
+	{ name = "Max Nargang", email = "CoffeeCoder1@outlook.com" },
 ]
 
 # For a list of valid classifiers, see https://pypi.org/classifiers/
@@ -40,6 +40,7 @@ dependencies = [
 	"google-api-python-client",
 	"google-auth-httplib2",
 	"google-auth-oauthlib",
+	"json-fix",
 ]
 
 [project.urls]
