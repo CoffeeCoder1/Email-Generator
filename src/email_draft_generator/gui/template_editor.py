@@ -11,11 +11,45 @@ from email_draft_generator.gui import util
 from email_draft_generator.email_template import EmailTemplate
 
 
-class AttachmentEditor(tk.Frame):
-	"""An editor for EmailAttachments."""
+class AttachmentEditorPopup(tk.Toplevel):
+	"""An editor window for EmailAttachments."""
 	
-	def __init__(self, parent, attachments: [] = []):
+	def __init__(self, parent, attachment):
 		super().__init__(parent)
+		
+		self.wm_title("Attachment Editor: " + attachment.filename)
+		
+		# Allow the contents to expand to the size of the frame
+		self.grid_rowconfigure(0, weight=1)
+		self.grid_columnconfigure(0, weight=1)
+		
+		self.attachment = attachment
+		
+		self.close_button = ttk.Button(self, text="Close", command=self.destroy)
+		self.close_button.grid(row=0, column=0)
+	
+	def show(self):
+		"""Shows the window and returns the template."""
+		self.deiconify()
+		self.wait_window()
+		return self.attachment
+
+
+class AttachmentEditor(tk.Frame):
+	"""An editor for a template's EmailAttachments."""
+	
+	def __init__(self, parent):
+		super().__init__(parent)
+	
+	def set_attachments(self, attachments):
+		self.attachments = attachments
+		for i, attachment in enumerate(attachments):
+			button = ttk.Button(self, text=attachment.filename, command=lambda: self.edit_attachment(attachment))
+			button.grid(row=0, column=i)
+	
+	def edit_attachment(self, attachment):
+		editor = AttachmentEditorPopup(self, attachment)
+		editor.show()
 
 
 # TODO: Add the ability to edit attachments
@@ -48,8 +82,18 @@ class TemplateEditor(tk.Frame):
 		self.body_textbox = util.SettableScrolledText(body_frame)
 		self.body_textbox.grid(sticky="nsew")
 		
+		# Attachments
+		attachment_frame = tk.LabelFrame(self, text="Attachments", padx=5, pady=5)
+		attachment_frame.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
+		attachment_frame.grid_rowconfigure(0, weight=1)
+		attachment_frame.grid_columnconfigure(0, weight=1)
+		
+		self.attachment_editor = AttachmentEditor(attachment_frame)
+		self.attachment_editor.grid(sticky="nsew")
+		
 		self.grid_rowconfigure(0, weight=0)
 		self.grid_rowconfigure(1, weight=1)
+		self.grid_rowconfigure(2, weight=0)
 		self.grid_columnconfigure(0, weight=1)
 		
 		self.set_template(self.template)
@@ -62,6 +106,7 @@ class TemplateEditor(tk.Frame):
 		"""Sets the template."""
 		self.subject_textbox.set_text(template.subject)
 		self.body_textbox.set_text(template.body)
+		self.attachment_editor.set_attachments(template.attachments)
 		self.template = template
 	
 	def check_if_edited(self):
