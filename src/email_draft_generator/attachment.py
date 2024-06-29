@@ -24,7 +24,7 @@ class EmailAttachment:
 	
 	def __json__(self):
 		"""Returns a dictionary for JSON serialization."""
-		return {"path": self.path, "filename": self.filename}
+		return {"path": str(self.path), "filename": self.filename}
 	
 	@classmethod
 	def from_path(cls, path: os.PathLike, filename: str | None = None):
