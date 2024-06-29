@@ -21,6 +21,16 @@ class EmailTemplate:
 		self.body = body
 		self.attachments = attachments
 	
+	def __eq__(self, other):
+		"""EmailTemplate objects are considered equal if they have the same contents."""
+		if type(self) != type(other):
+			return NotImplemented
+		return vars(self) == vars(other)
+	
+	def __json__(self):
+		"""Returns a dictionary for JSON serialization."""
+		return self.__dict__
+	
 	def create_email_body(self, recipient: EmailRecipient):
 		"""Uses the template to generate an E-mail body with the provided company."""
 		mime_message = EmailMessage()

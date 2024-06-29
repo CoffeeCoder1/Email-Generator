@@ -16,6 +16,16 @@ class EmailAttachment:
 		type_subtype, _ = mimetypes.guess_type(path)
 		self.maintype, self.subtype = type_subtype.split("/")
 	
+	def __eq__(self, other):
+		"""EmailAttachment objects are considered equal if they have the same contents."""
+		if type(self) != type(other):
+			return NotImplemented
+		return vars(self) == vars(other)
+	
+	def __json__(self):
+		"""Returns a dictionary for JSON serialization."""
+		return {"path": self.path, "filename": self.filename}
+	
 	@classmethod
 	def from_path(cls, path: os.PathLike, filename: str | None = None):
 		with open(path, "rb") as fp:
