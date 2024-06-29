@@ -54,7 +54,7 @@ class App(tk.Frame):
 	
 	def send_emails(self):
 		# If not authenticated, prompt the user to authenticate
-		if not self.creds.valid:
+		if not self.creds or not self.creds.valid:
 			self.authenticate()
 		
 		#drafting_progressbar = ttk.Progressbar(self, orient='horizontal', mode='indeterminate')
