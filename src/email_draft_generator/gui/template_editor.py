@@ -1,12 +1,15 @@
 import os
 import json
 import json_fix
+import subprocess
+import platform
 
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
 
+from email_draft_generator.attachment import EmailAttachment
 from email_draft_generator.gui import util
 from email_draft_generator.email_template import EmailTemplate
 
@@ -14,8 +17,9 @@ from email_draft_generator.email_template import EmailTemplate
 class AttachmentEditorPopup(tk.Toplevel):
 	"""An editor window for EmailAttachments."""
 	
-	def __init__(self, parent, attachment):
+	def __init__(self, parent, attachment: EmailAttachment):
 		super().__init__(parent)
+		# TODO: Add a file preview?
 		
 		self.wm_title("Attachment Editor: " + attachment.filename)
 		
@@ -25,13 +29,35 @@ class AttachmentEditorPopup(tk.Toplevel):
 		
 		self.attachment = attachment
 		
-		self.close_button = ttk.Button(self, text="Close", command=self.destroy)
-		self.close_button.grid(row=0, column=0)
+		# Filename
+		filename_frame = tk.LabelFrame(self, text="File Name", padx=5, pady=5)
+		filename_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew", columnspan=2)
+		filename_frame.grid_rowconfigure(0, weight=1)
+		filename_frame.grid_columnconfigure(0, weight=1)
+		
+		self.filename_textbox = util.SettableEntry(filename_frame)
+		self.filename_textbox.grid(sticky="nsew")
+		self.filename_textbox.set_text(self.attachment.filename)
+		
+		buttons_frame = ttk.Frame(self)
+		buttons_frame.grid(row=1, column=0, sticky="ew")
+		ttk.Button(buttons_frame, text="Preview", command=self.open).grid(row=0, column=0)
+		ttk.Button(buttons_frame, text="Close", command=self.destroy).grid(row=0, column=1)
+	
+	def open(self):
+		if platform.system() == 'Darwin':  # macOS
+			subprocess.call(('open', self.attachment.path))  # type: ignore
+		elif platform.system() == 'Windows':  # Windows
+			os.startfile(self.attachment.path)  # type: ignore
+		else:  # linux variants
+			subprocess.call(('xdg-open', self.attachment.path))  # type: ignore
 	
 	def show(self):
 		"""Shows the window and returns the template."""
 		self.deiconify()
 		self.wait_window()
+		# TODO: Figure out why this doesnt work
+		self.attachment.filename = self.filename_textbox.get()
 		return self.attachment
 
 
@@ -40,16 +66,26 @@ class AttachmentEditor(tk.Frame):
 	
 	def __init__(self, parent):
 		super().__init__(parent)
+		
+		# Frame to contain attachments
+		self.attachment_frame = tk.LabelFrame(self, text="Attachments", padx=5, pady=5)
+		self.attachment_frame.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
+		
+		self.attachment_frame.grid_rowconfigure(0, weight=1)
+		self.attachment_frame.grid_columnconfigure(0, weight=1)
 	
 	def set_attachments(self, attachments):
 		self.attachments = attachments
 		for i, attachment in enumerate(attachments):
-			button = ttk.Button(self, text=attachment.filename, command=lambda: self.edit_attachment(attachment))
+			button = ttk.Button(self.attachment_frame, text=attachment.filename, command=lambda: self.edit_attachment(i))
 			button.grid(row=0, column=i)
 	
-	def edit_attachment(self, attachment):
-		editor = AttachmentEditorPopup(self, attachment)
-		editor.show()
+	def edit_attachment(self, attachment: int):
+		editor = AttachmentEditorPopup(self, self.attachments[attachment])
+		self.attachments[attachment] = editor.show()
+	
+	def get(self):
+		return self.attachments
 
 
 # TODO: Add the ability to edit attachments
@@ -83,12 +119,7 @@ class TemplateEditor(tk.Frame):
 		self.body_textbox.grid(sticky="nsew")
 		
 		# Attachments
-		attachment_frame = tk.LabelFrame(self, text="Attachments", padx=5, pady=5)
-		attachment_frame.grid(row=2, column=0, padx=10, pady=10, sticky="nsew")
-		attachment_frame.grid_rowconfigure(0, weight=1)
-		attachment_frame.grid_columnconfigure(0, weight=1)
-		
-		self.attachment_editor = AttachmentEditor(attachment_frame)
+		self.attachment_editor = AttachmentEditor(self)
 		self.attachment_editor.grid(sticky="nsew")
 		
 		self.grid_rowconfigure(0, weight=0)
@@ -100,7 +131,7 @@ class TemplateEditor(tk.Frame):
 	
 	def get_template(self):
 		"""Returns the current template."""
-		return EmailTemplate(subject=self.subject_textbox.get(), body=self.body_textbox.get("1.0", "end-1c"))
+		return EmailTemplate(subject=self.subject_textbox.get(), body=self.body_textbox.get("1.0", "end-1c"), attachments=self.attachment_editor.get())
 	
 	def set_template(self, template: EmailTemplate):
 		"""Sets the template."""
