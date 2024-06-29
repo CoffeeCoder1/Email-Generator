@@ -21,7 +21,12 @@ def main():
 			recipients = text_parser.parse(args.infile.readlines())
 		elif args.format == 'csv':
 			recipients = csv_parser.parse(args.infile)
+		else:
+			recipients = None
+		
+		if recipients != None:
+			json.dump(recipients, sys.stdout, indent="\t")
+		else:
+			raise ValueError("Unsupported filetype!")
 	except:
 		raise ValueError("Invalid input file")
-	
-	json.dump(recipients, sys.stdout, indent="\t")
