@@ -1,12 +1,11 @@
 import os
 
 import json
-import concurrent.futures
 import argparse
 
 from email_draft_generator import gmail
 from email_draft_generator.email_template import EmailTemplate
-from email_draft_generator.email_list import EmailRecipient
+from email_draft_generator.email_drafter import EmailDrafter
 
 
 def main():
@@ -40,6 +39,4 @@ def main():
 	creds = gmail.get_creds(global_token_path, global_creds_path)
 	
 	print("Generating and uploading E-mails")
-	with concurrent.futures.ProcessPoolExecutor() as executor:
-		for recipient in recipients:
-			gmail.create_draft(creds, template.create_email_body(EmailRecipient.from_dict(recipient)))
+	EmailDrafter.generate_drafts(recipients, template, creds)
