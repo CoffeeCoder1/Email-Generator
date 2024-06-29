@@ -1,0 +1,4 @@
+[style]
+USE_TABS = true
+COLUMN_LIMIT = 10000
+INDENT_BLANK_LINES = true
