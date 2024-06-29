@@ -1,5 +1,6 @@
 import os
 import json
+import pathlib
 import json_fix
 import subprocess
 import platform
@@ -82,6 +83,13 @@ class AttachmentEditor(tk.Frame):
 		
 		self.attachment_frame.grid_rowconfigure(0, weight=1)
 		self.attachment_frame.grid_columnconfigure(0, weight=1)
+		
+		ttk.Button(self, text="New Attachment", command=self.new).grid(row=1, column=0)
+	
+	def new(self):
+		attachment_path = filedialog.askopenfilename()
+		self.attachments.append(EmailAttachment.from_path(pathlib.Path(attachment_path)))
+		self.set_attachments(self.attachments)
 	
 	def set_attachments(self, attachments):
 		self.attachments = attachments
