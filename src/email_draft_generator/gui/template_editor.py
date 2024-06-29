@@ -28,10 +28,11 @@ class AttachmentEditorPopup(tk.Toplevel):
 		self.grid_columnconfigure(0, weight=1)
 		
 		self.attachment = attachment
+		self.deleted = False
 		
 		# Filename
 		filename_frame = tk.LabelFrame(self, text="File Name", padx=5, pady=5)
-		filename_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew", columnspan=2)
+		filename_frame.grid(row=0, column=0, padx=10, pady=10, sticky="nsew")
 		filename_frame.grid_rowconfigure(0, weight=1)
 		filename_frame.grid_columnconfigure(0, weight=1)
 		
@@ -42,7 +43,8 @@ class AttachmentEditorPopup(tk.Toplevel):
 		buttons_frame = ttk.Frame(self)
 		buttons_frame.grid(row=1, column=0, sticky="ew")
 		ttk.Button(buttons_frame, text="Preview", command=self.open).grid(row=0, column=0)
-		ttk.Button(buttons_frame, text="Close", command=self.destroy).grid(row=0, column=1)
+		ttk.Button(buttons_frame, text="Delete", command=self.delete).grid(row=0, column=1)
+		ttk.Button(buttons_frame, text="Close", command=self.destroy).grid(row=0, column=2)
 	
 	def open(self):
 		if platform.system() == 'Darwin':  # macOS
@@ -52,13 +54,20 @@ class AttachmentEditorPopup(tk.Toplevel):
 		else:  # linux variants
 			subprocess.call(('xdg-open', self.attachment.path))  # type: ignore
 	
+	def delete(self):
+		self.deleted = True
+		self.destroy()
+	
 	def show(self):
 		"""Shows the window and returns the template."""
 		self.deiconify()
 		self.wait_window()
 		# TODO: Figure out why this doesnt work
-		self.attachment.filename = self.filename_textbox.get()
-		return self.attachment
+		#self.attachment.filename = self.filename_textbox.get()
+		if not self.deleted:
+			return self.attachment
+		else:
+			return False
 
 
 class AttachmentEditor(tk.Frame):
@@ -76,6 +85,10 @@ class AttachmentEditor(tk.Frame):
 	
 	def set_attachments(self, attachments):
 		self.attachments = attachments
+		# Remove all of the previous attachments fromt the frame
+		for widget in self.attachment_frame.winfo_children():
+			widget.destroy()
+		# Add a widget for each attachment
 		for i, attachment in enumerate(attachments):
 			button = ttk.Button(self.attachment_frame, text=attachment.filename, command=lambda: self.edit_attachment(i))
 			button.grid(row=0, column=i)
@@ -83,12 +96,14 @@ class AttachmentEditor(tk.Frame):
 	def edit_attachment(self, attachment: int):
 		editor = AttachmentEditorPopup(self, self.attachments[attachment])
 		self.attachments[attachment] = editor.show()
+		if self.attachments[attachment] == False:
+			self.attachments.pop(attachment)
+		self.set_attachments(self.attachments)
 	
 	def get(self):
 		return self.attachments
 
 
-# TODO: Add the ability to edit attachments
 class TemplateEditor(tk.Frame):
 	"""An editor for EmailTemplates."""
 	
