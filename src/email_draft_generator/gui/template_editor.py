@@ -229,8 +229,17 @@ class TemplateEditorWindow(tk.Frame):
 		"""Saves the current template and returns to the main window if it is a popup."""
 		self.template_editor.template = self.template_editor.get_template()
 		
-		with open(self.template_path, "w") as template_file:
-			json.dump(self.template_editor.template, template_file)
+		if not hasattr(self, "template_path"):
+			# If no template file was opened, prompt the user to save to a new file
+			template_file = filedialog.asksaveasfile(mode='w', title="Select where to save the template", defaultextension=".json")
+			if template_file == None:
+				if self.popup:
+					self.parent.withdraw()
+				return
+		else:
+			template_file = open(self.template_path, "w")
+		
+		json.dump(self.template_editor.template, template_file)
 		
 		if self.popup:
 			self.parent.withdraw()
