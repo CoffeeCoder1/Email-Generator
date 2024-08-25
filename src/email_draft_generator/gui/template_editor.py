@@ -210,6 +210,9 @@ class TemplateEditorWindow(tk.Frame):
 			save_prompt = messagebox.askyesnocancel("Unsaved Changes", "You have unsaved changes. Would you like to save them?")
 			if save_prompt == True:
 				self.save_template()
+			elif save_prompt == False:
+				self.template_editor.set_template(self.template_editor.template)
+			
 			return save_prompt != None
 		else:
 			return True
