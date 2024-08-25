@@ -3,6 +3,7 @@ import json
 import mimetypes
 import os
 import concurrent.futures
+import threading
 
 import tkinter as tk
 from tkinter import ttk
@@ -96,16 +97,12 @@ class App(tk.Frame):
 		if not self.email_list:
 			self.load_email_list()
 		
-		#drafting_progressbar = ttk.Progressbar(self, orient='horizontal', mode='indeterminate')
-		#drafting_progressbar.grid(column=0, row=2)
+		self.drafting_progressbar = ttk.Progressbar(self, orient='horizontal', maximum=len(self.email_list))
+		self.drafting_progressbar.grid(column=0, row=4)
 		
-		# TODO: Add a GUI to select and edit this
-		#drafting_progressbar.step()
-		
-		# TODO: Make the progressbar work
-		#drafting_progressbar.start()
-		EmailDrafter.generate_drafts(self.email_list, self.template_editor.template_editor.template_editor.template, self.creds)
-		#drafting_progressbar.stop()
+		# Thread allows the UI to continue to work while this runs
+		t = threading.Thread(target=EmailDrafter.generate_drafts, args=(self.email_list, self.template_editor.template_editor.template_editor.template, self.creds, self.drafting_progressbar))
+		t.start()
 
 
 def main():
