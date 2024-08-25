@@ -12,4 +12,4 @@ class EmailDrafter:
 	def generate_drafts(cls, recipients, template: EmailTemplate, creds):
 		with concurrent.futures.ProcessPoolExecutor() as executor:
 			for recipient in recipients:
-				gmail.create_draft(creds, template.create_email_body(EmailRecipient.from_dict(recipient)))
+				gmail.create_draft(creds, template.create_email_body(recipient))
