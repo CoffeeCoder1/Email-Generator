@@ -31,7 +31,8 @@ class CredsPopup(tk.Toplevel):
 	def choose_path(self):
 		"""Prompts the user to select the creds file."""
 		self.selected_path = filedialog.askopenfilename(title="Select credentials file", filetypes=[("Google API credentials files", ".json")])
-		self.destroy()
+		if not (self.selected_path == None or self.selected_path == ''):
+			self.destroy()
 	
 	def show(self):
 		"""Shows the window and returns the selected file path"""

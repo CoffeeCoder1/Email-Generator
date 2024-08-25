@@ -66,6 +66,9 @@ class App(tk.Frame):
 		"""Opens an E-mail list"""
 		email_list_path = filedialog.askopenfilename(title="Select E-mail list", filetypes=[("E-mail list files", ".json .csv .txt")])
 		
+		if email_list_path == None or email_list_path == '':
+			return
+		
 		# Get the mimetype of the file so we can figure out how to parse it
 		type_subtype, _ = mimetypes.guess_type(email_list_path)
 		

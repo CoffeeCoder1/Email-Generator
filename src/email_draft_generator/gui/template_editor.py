@@ -223,6 +223,9 @@ class TemplateEditorWindow(tk.Frame):
 		if self.prompt_to_save():
 			self.template_path = filedialog.askopenfilename(title="Select E-mail template", filetypes=[("E-mail template files", ".json")])
 			
+			if self.template_path == None or self.template_path == '':
+				return
+			
 			# Parse template
 			with open(self.template_path) as template_file:
 				self.template_editor.set_template(EmailTemplate.from_file(template_file))
