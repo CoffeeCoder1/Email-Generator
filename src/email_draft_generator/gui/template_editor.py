@@ -191,7 +191,8 @@ class TemplateEditorWindow(tk.Frame):
 		
 		if popup:
 			ttk.Button(buttons_frame, text="Save and Return", command=self.save_template).grid(row=0, column=0)
-			ttk.Button(buttons_frame, text="Cancel", command=self.quit_with_prompt).grid(row=0, column=1)
+			ttk.Button(buttons_frame, text="Save As...", command=self.save_template_as).grid(row=0, column=1)
+			ttk.Button(buttons_frame, text="Cancel", command=self.quit_with_prompt).grid(row=0, column=2)
 		else:
 			ttk.Button(buttons_frame, text="Open", command=self.load_template).grid(row=0, column=0)
 			ttk.Button(buttons_frame, text="Save", command=self.save_template).grid(row=0, column=1)
@@ -234,18 +235,33 @@ class TemplateEditorWindow(tk.Frame):
 		
 		if not hasattr(self, "template_path"):
 			# If no template file was opened, prompt the user to save to a new file
-			template_file = filedialog.asksaveasfile(mode='w', title="Select where to save the template", defaultextension=".json")
-			if template_file == None:
+			template_path = filedialog.asksaveasfilename(title="Select where to save the template", defaultextension=".json")
+			if template_path == None or template_path == '':
 				if self.popup:
 					self.parent.withdraw()
 				return
-		else:
-			template_file = open(self.template_path, "w")
+			else:
+				self.template_path = template_path
+				self.parent.wm_title("Template Editor - " + os.path.basename(self.template_path))
 		
-		json.dump(self.template_editor.template, template_file)
+		with open(self.template_path, "w") as template_file:
+			json.dump(self.template_editor.template, template_file)
 		
 		if self.popup:
 			self.parent.withdraw()
+	
+	def save_template_as(self):
+		"""Saves the current template as a new file."""
+		self.template_editor.template = self.template_editor.get_template()
+		
+		template_path = filedialog.asksaveasfilename(title="Select where to save the template", defaultextension=".json")
+		if template_path == None or template_path == '':
+			return
+		else:
+			self.template_path = template_path
+			self.parent.wm_title("Template Editor - " + os.path.basename(self.template_path))
+		
+		self.save_template()
 	
 	def quit_with_prompt(self):
 		"""Quit, prompting the user to save if the file has been edited."""
