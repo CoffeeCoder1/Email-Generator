@@ -50,7 +50,7 @@ class App(tk.Frame):
 		ttk.Label(frm, text="E-mail list").grid(column=0, row=2)
 		ttk.Button(frm, text="Open", command=self.load_email_list).grid(column=1, row=2)
 		
-		ttk.Button(frm, text="Draft E-mails", command=self.send_emails).grid(column=0, row=2)
+		ttk.Button(frm, text="Draft E-mails", command=self.send_emails).grid(column=0, row=3)
 	
 	def authenticate(self):
 		self.creds = gmail_gui.get_creds(global_token_path, global_creds_path, root=self)
