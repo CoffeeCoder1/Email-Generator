@@ -64,7 +64,7 @@ class App(tk.Frame):
 	
 	def load_email_list(self):
 		"""Opens an E-mail list"""
-		email_list_path = filedialog.askopenfilename()
+		email_list_path = filedialog.askopenfilename(title="Select E-mail list")
 		
 		# Get the mimetype of the file so we can figure out how to parse it
 		type_subtype, _ = mimetypes.guess_type(email_list_path)
