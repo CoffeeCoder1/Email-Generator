@@ -94,7 +94,7 @@ class App(tk.Frame):
 			self.authenticate()
 		
 		# If no email list was provided, load the email list
-		if not self.email_list:
+		if not hasattr(self, 'email_list'):
 			self.load_email_list()
 		
 		self.drafting_progressbar = ttk.Progressbar(self, orient='horizontal', maximum=len(self.email_list))
