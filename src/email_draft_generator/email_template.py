@@ -71,6 +71,7 @@ company.email: {email}""",
 		    subject=dictionary.get('subject'),
 		    body=dictionary.get('body'),
 		)
+		template.attachments = []  # Make sure that there are no attachments left over from the previous run
 		if 'attachments' in dictionary:
 			for attachment in dictionary['attachments']:
 				template.attachments.append(EmailAttachment.from_dict(attachment))
