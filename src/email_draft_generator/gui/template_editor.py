@@ -196,7 +196,8 @@ class TemplateEditorWindow(tk.Frame):
 		else:
 			ttk.Button(buttons_frame, text="Open", command=self.load_template).grid(row=0, column=0)
 			ttk.Button(buttons_frame, text="Save", command=self.save_template).grid(row=0, column=1)
-			ttk.Button(buttons_frame, text="Exit", command=self.quit_with_prompt).grid(row=0, column=2)
+			ttk.Button(buttons_frame, text="Save As...", command=self.save_template_as).grid(row=0, column=2)
+			ttk.Button(buttons_frame, text="Exit", command=self.quit_with_prompt).grid(row=0, column=3)
 		
 		self.template_editor = TemplateEditor(self, template)
 		self.template_editor.grid(row=1, column=0, sticky="nsew")
