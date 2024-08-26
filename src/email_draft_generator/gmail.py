@@ -85,3 +85,16 @@ def create_draft(creds, body):
 		print(f"An error occurred: {error}")
 		draft = None
 	return draft
+
+
+def get_user_info(creds):
+	"""Creates an email draft with the provided body"""
+	try:
+		# Create Gmail API client
+		service = build("gmail", "v1", credentials=creds)
+		
+		profile = service.users().getProfile(userId='me').execute()
+	except HttpError as error:
+		print(f"An error occurred: {error}")
+		profile = None
+	return profile

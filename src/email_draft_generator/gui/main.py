@@ -11,6 +11,7 @@ from tkinter import ttk
 from tkinter import filedialog
 from tkinter import messagebox
 
+from email_draft_generator import gmail
 from email_draft_generator.gui import gmail_gui
 from email_draft_generator.file_parser import csv_parser
 from email_draft_generator.file_parser import text_parser
@@ -44,7 +45,10 @@ class App(tk.Frame):
 		self.template_editor = TemplateEditorPopup(self)
 		self.template_editor.withdraw()
 		
-		ttk.Button(frm, text="Authenticate", command=self.authenticate_button).grid(column=0, row=0)
+		self.authenticate_button = ttk.Button(frm, text="Authenticate", command=self.authenticate_button_callback)
+		self.authenticate_button.grid(column=0, row=0)
+		self.account_label = ttk.Label(frm)
+		self.account_label.grid(column=1, row=0)
 		
 		ttk.Label(frm, text="Template").grid(column=0, row=1)
 		ttk.Button(frm, text="Open", command=self.template_editor.template_editor.load_template).grid(column=1, row=1)
@@ -54,21 +58,38 @@ class App(tk.Frame):
 		ttk.Button(frm, text="Open", command=self.load_email_list).grid(column=1, row=2)
 		
 		ttk.Button(frm, text="Draft E-mails", command=self.send_emails).grid(column=0, row=3)
+		
+		self.update_authenticate_label()
 	
-	def authenticate_button(self):
+	def authenticate_button_callback(self):
 		"""Callback for the authentication button, logs out if already authenticated."""
 		if not self.creds or not self.creds.valid:
 			self.authenticate()
 		else:
 			self.log_out()
-			self.creds = gmail_gui.get_creds(global_token_path, global_creds_path)  # Clear the credentials variable
 	
 	def authenticate(self):
 		self.creds = gmail_gui.get_creds(global_token_path, global_creds_path, root=self)
+		self.update_authenticate_label()
 	
 	def log_out(self):
 		if messagebox.askyesno("Log out?", "Would you like to log out?"):
 			Path(global_token_path).unlink(missing_ok=True)
+			self.creds = gmail_gui.get_creds(global_token_path, global_creds_path)  # Clear the credentials variable
+			self.update_authenticate_label()
+	
+	def update_authenticate_label(self):
+		"""Update the authenticate button text to show if you are logged in or not."""
+		if not self.creds or not self.creds.valid:
+			self.authenticate_button.config(text="Authenticate")
+			self.account_label.config(text="")
+		else:
+			self.authenticate_button.config(text="Log Out")
+			profile = gmail.get_user_info(self.creds)
+			if profile != None:
+				self.account_label.config(text=f"Logged in as {profile['emailAddress']}")
+			else:
+				self.account_label.config(text=f"Unable to retrieve E-mail address")
 	
 	def edit_template(self):
 		"""Opens the template editor"""
