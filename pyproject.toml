@@ -19,7 +19,6 @@ authors = [
 
 # This should be your name or the names of the organization who currently maintains the project, and a valid email address corresponding to the name listed.
 maintainers = [
-	{ name = "Brandon Clague", email = "94200657+fodfodfod@users.noreply.github.com" },
 	{ name = "Max Nargang", email = "CoffeeCoder1@outlook.com" },
 ]
 
@@ -44,9 +43,9 @@ dependencies = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/fodfodfod/Email-Generator"
-"Bug Reports" = "https://github.com/fodfodfod/Email-Generator/issues"
-"Source" = "https://github.com/fodfodfod/Email-Generator"
+"Homepage" = "https://github.com/CoffeeCoder1/Email-Generator"
+"Bug Reports" = "https://github.com/CoffeeCoder1/Email-Generator/issues"
+"Source" = "https://github.com/CoffeeCoder1/Email-Generator"
 
 [project.scripts]
 email-generator = "email_draft_generator.main:main"
