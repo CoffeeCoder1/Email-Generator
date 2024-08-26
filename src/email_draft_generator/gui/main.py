@@ -3,11 +3,13 @@ import json
 import mimetypes
 import os
 import concurrent.futures
+from pathlib import Path
 import threading
 
 import tkinter as tk
 from tkinter import ttk
 from tkinter import filedialog
+from tkinter import messagebox
 
 from email_draft_generator.gui import gmail_gui
 from email_draft_generator.file_parser import csv_parser
@@ -42,7 +44,7 @@ class App(tk.Frame):
 		self.template_editor = TemplateEditorPopup(self)
 		self.template_editor.withdraw()
 		
-		ttk.Button(frm, text="Authenticate", command=self.authenticate).grid(column=0, row=0)
+		ttk.Button(frm, text="Authenticate", command=self.authenticate_button).grid(column=0, row=0)
 		
 		ttk.Label(frm, text="Template").grid(column=0, row=1)
 		ttk.Button(frm, text="Open", command=self.template_editor.template_editor.load_template).grid(column=1, row=1)
@@ -53,8 +55,20 @@ class App(tk.Frame):
 		
 		ttk.Button(frm, text="Draft E-mails", command=self.send_emails).grid(column=0, row=3)
 	
+	def authenticate_button(self):
+		"""Callback for the authentication button, logs out if already authenticated."""
+		if not self.creds or not self.creds.valid:
+			self.authenticate()
+		else:
+			self.log_out()
+			self.creds = gmail_gui.get_creds(global_token_path, global_creds_path)  # Clear the credentials variable
+	
 	def authenticate(self):
 		self.creds = gmail_gui.get_creds(global_token_path, global_creds_path, root=self)
+	
+	def log_out(self):
+		if messagebox.askyesno("Log out?", "Would you like to log out?"):
+			Path(global_token_path).unlink(missing_ok=True)
 	
 	def edit_template(self):
 		"""Opens the template editor"""
