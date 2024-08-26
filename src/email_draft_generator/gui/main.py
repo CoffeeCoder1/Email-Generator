@@ -48,7 +48,7 @@ class App(tk.Frame):
 		self.authenticate_button = ttk.Button(frm, text="Authenticate", command=self.authenticate_button_callback)
 		self.authenticate_button.grid(column=0, row=0)
 		self.account_label = ttk.Label(frm)
-		self.account_label.grid(column=1, row=0)
+		self.account_label.grid(column=1, row=0, columnspan=2)
 		
 		ttk.Label(frm, text="Template").grid(column=0, row=1)
 		ttk.Button(frm, text="Open", command=self.template_editor.template_editor.load_template).grid(column=1, row=1)
