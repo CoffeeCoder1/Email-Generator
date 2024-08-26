@@ -1,5 +1,6 @@
 import os
 from pathlib import Path
+
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
@@ -9,6 +10,7 @@ from googleapiclient.errors import HttpError
 # If modifying these scopes, delete the file token.json.
 SCOPES = ["https://www.googleapis.com/auth/gmail.compose"]
 
+
 def get_oauth_flow(global_creds_path, creds_path=None):
 	"""Get an OAuth2 flow from the specified credentials, copying them to the global location if they are not already there."""
 	if not os.path.exists(global_creds_path) and creds_path:
@@ -16,19 +18,20 @@ def get_oauth_flow(global_creds_path, creds_path=None):
 		input_path = Path(creds_path)
 		with open(input_path, "r") as creds_input:
 			oauth_creds = creds_input.read()
-
+		
 		flow = InstalledAppFlow.from_client_secrets_file(creds_path, SCOPES)
-
+		
 		output_path = Path(global_creds_path)
 		output_path.parent.mkdir(parents=True, exist_ok=True)
 		with open(global_creds_path, "w") as creds_output:
 			creds_output.write(oauth_creds)
-
+		
 		input_path.unlink(missing_ok=True)
 	else:
 		# If they do, create an OAuth flow
 		flow = InstalledAppFlow.from_client_secrets_file(global_creds_path, SCOPES)
 	return flow
+
 
 def get_token(token_path):
 	"""Get the user's OAuth2 token and refresh it if it is expired."""
@@ -42,12 +45,14 @@ def get_token(token_path):
 		creds = None
 	return creds
 
+
 def write_token(creds, token_path):
 	"""Sets the user's token globally."""
 	output_path = Path(token_path)
 	output_path.parent.mkdir(parents=True, exist_ok=True)
 	with open(token_path, "w") as token:
 		token.write(creds.to_json())
+
 
 def get_creds(token_path, creds_path):
 	"""Gets the user's Gmail credentials, asking for input on the command line where necessary."""
@@ -66,21 +71,30 @@ def get_creds(token_path, creds_path):
 		write_token(creds, token_path)
 	return creds
 
+
 def create_draft(creds, body):
 	"""Creates an email draft with the provided body"""
 	try:
 		# Create Gmail API client
 		service = build("gmail", "v1", credentials=creds)
-
+		
 		# pylint: disable=E1101
-		draft = (
-			service.users()
-				.drafts()
-				.create(userId="me", body=body)
-				.execute()
-		)
+		draft = (service.users().drafts().create(userId="me", body=body).execute())
 		print(f'Draft id: {draft["id"]}\nDraft message: {draft["message"]}')
 	except HttpError as error:
 		print(f"An error occurred: {error}")
 		draft = None
 	return draft
+
+
+def get_user_info(creds):
+	"""Creates an email draft with the provided body"""
+	try:
+		# Create Gmail API client
+		service = build("gmail", "v1", credentials=creds)
+		
+		profile = service.users().getProfile(userId='me').execute()
+	except HttpError as error:
+		print(f"An error occurred: {error}")
+		profile = None
+	return profile

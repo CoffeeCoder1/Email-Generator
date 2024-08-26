@@ -8,8 +8,8 @@ pip3 install email-draft-generator
 ## Building from source
 Install the `build` tool with pip and run `python3 -m build` to build the package.
 
-## Usage
-The utility provides two binaries: `email-generator` and `email-list-parser`.
+## Usage (command line)
+The utility provides two command-line binaries: `email-generator` and `email-list-parser`.
 
 ### email-generator
 `email-generator` takes a JSON-formatted list of E-mail addresses and recipient names, formats them according to the template JSON, and uploads them to Gmail. To set up the Google API, run it once (you will need to provide a valid list of E-mail addresses for it to run), and it will guide you through setting this up. Most of the usage specifics are described in the usage help, which you can show by running `email-generator -h`.
@@ -64,4 +64,7 @@ Run the program once, and it will guide you through setting up the Google API.
 Copy and paste the table into `data/email-list.txt`.
 ### Run the program
 Run `run.sh` (can be run by double-clicking as well)
-The first time it is run, you will need to authenticate with the account that you want to upload the drafts to. A browser window should be opened automatically to do this in (if it is not, copy and paste the URL from the terminal window into your browser).
+The first time it is run, you will need to authenticate with the account that you want to upload the drafts to. A browser window should be opened automatically to do this in (if it is not, copy and paste the URL from the terminal window into your browser). The authentication flow may not work in Firefox or other Gecko-based browsers, so try Chrome, Safari, or another Chromium- or Webkit-based browser if it doesn't work for you.
+
+## Usage (GUI)
+The utility provides two GUI binaries: `email-generator-gui` and `email-template-editor-gui`. These take no command line arguments.

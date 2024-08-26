@@ -7,21 +7,18 @@ name = "email_draft_generator"
 version = "0.0.4"
 description = "A utility to generate E-mail drafts from a list of E-mail addresses."
 readme = "README.md"
-license = {file = "LICENSE"}
-requires-python = ">=3.8"
+license = { file = "LICENSE" }
+requires-python = ">=3.10"
 keywords = ["email", "gmail", "email-template", "email-generator"]
 
 # This should be your name or the name of the organization who originally authored the project, and a valid email address corresponding to the name listed.
 authors = [
-	{name = "Brandon Clague", email = "94200657+fodfodfod@users.noreply.github.com" },
-	{name = "Max Nargang", email = "CoffeeCoder1@outlook.com" }
+	{ name = "Brandon Clague", email = "94200657+fodfodfod@users.noreply.github.com" },
+	{ name = "Max Nargang", email = "CoffeeCoder1@outlook.com" },
 ]
 
 # This should be your name or the names of the organization who currently maintains the project, and a valid email address corresponding to the name listed.
-maintainers = [
-	{name = "Brandon Clague", email = "94200657+fodfodfod@users.noreply.github.com" },
-	{name = "Max Nargang", email = "CoffeeCoder1@outlook.com" }
-]
+maintainers = [{ name = "Max Nargang", email = "CoffeeCoder1@outlook.com" }]
 
 # For a list of valid classifiers, see https://pypi.org/classifiers/
 classifiers = [
@@ -29,7 +26,7 @@ classifiers = [
 	#   3 - Alpha
 	#   4 - Beta
 	#   5 - Production/Stable
-	"Development Status :: 3 - Alpha",
+	"Development Status :: 4 - Beta",
 	"Intended Audience :: Customer Service",
 	"Topic :: Communications :: Email :: Mailing List Servers",
 	"License :: OSI Approved :: MIT License",
@@ -40,13 +37,19 @@ dependencies = [
 	"google-api-python-client",
 	"google-auth-httplib2",
 	"google-auth-oauthlib",
+	"json-fix",
 ]
 
+[project.optional-dependencies]
+packaging = ["pyinstaller"]
+
 [project.urls]
-"Homepage" = "https://github.com/fodfodfod/Email-Generator"
-"Bug Reports" = "https://github.com/fodfodfod/Email-Generator/issues"
-"Source" = "https://github.com/fodfodfod/Email-Generator"
+"Homepage" = "https://github.com/CoffeeCoder1/Email-Generator"
+"Bug Reports" = "https://github.com/CoffeeCoder1/Email-Generator/issues"
+"Source" = "https://github.com/CoffeeCoder1/Email-Generator"
 
 [project.scripts]
 email-generator = "email_draft_generator.main:main"
 email-list-parser = "email_draft_generator.file_parser.main:main"
+email-generator-gui = "email_draft_generator.gui.main:main"
+email-template-editor-gui = "email_draft_generator.gui.template_editor:main"
