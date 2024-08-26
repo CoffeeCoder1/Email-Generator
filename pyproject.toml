@@ -18,9 +18,7 @@ authors = [
 ]
 
 # This should be your name or the names of the organization who currently maintains the project, and a valid email address corresponding to the name listed.
-maintainers = [
-	{ name = "Max Nargang", email = "CoffeeCoder1@outlook.com" },
-]
+maintainers = [{ name = "Max Nargang", email = "CoffeeCoder1@outlook.com" }]
 
 # For a list of valid classifiers, see https://pypi.org/classifiers/
 classifiers = [
@@ -41,6 +39,9 @@ dependencies = [
 	"google-auth-oauthlib",
 	"json-fix",
 ]
+
+[project.optional-dependencies]
+packaging = ["pyinstaller"]
 
 [project.urls]
 "Homepage" = "https://github.com/CoffeeCoder1/Email-Generator"
