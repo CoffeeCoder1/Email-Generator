@@ -28,7 +28,7 @@ classifiers = [
 	#   3 - Alpha
 	#   4 - Beta
 	#   5 - Production/Stable
-	"Development Status :: 3 - Alpha",
+	"Development Status :: 4 - Beta",
 	"Intended Audience :: Customer Service",
 	"Topic :: Communications :: Email :: Mailing List Servers",
 	"License :: OSI Approved :: MIT License",
