@@ -58,4 +58,6 @@ def get_creds(token_path, creds_path, root=None):
 		creds = flow.run_local_server(port=0)
 		# Save the credentials for the next run
 		gmail.write_token(creds, token_path)
+		# Refocus the main window
+		root.parent.focus_force()
 	return creds
