@@ -39,4 +39,5 @@ def main():
 	creds = gmail.get_creds(global_token_path, global_creds_path)
 	
 	print("Generating and uploading E-mails")
-	EmailDrafter.generate_drafts(recipients, template, creds)
+	email_drafter = EmailDrafter()
+	email_drafter.generate_drafts(recipients, template, creds)

@@ -36,6 +36,7 @@ class App(tk.Frame):
 		self.pack()
 		
 		self.parent = master
+		self.errors = []
 		
 		# Frame for the main app content
 		frm = self
@@ -58,8 +59,12 @@ class App(tk.Frame):
 		ttk.Button(frm, text="Open", command=self.load_email_list).grid(column=1, row=2)
 		
 		ttk.Button(frm, text="Draft E-mails", command=self.send_emails).grid(column=0, row=3)
+		self.error_button = ttk.Button(frm, text="View Errors", command=self.view_errors, state='disabled')
+		self.error_button.grid(column=1, row=3)
 		
 		self.update_authenticate_label()
+		
+		self.email_drafter = EmailDrafter()
 	
 	def authenticate_button_callback(self):
 		"""Callback for the authentication button, logs out if already authenticated."""
@@ -139,8 +144,21 @@ class App(tk.Frame):
 		self.drafting_progressbar.grid(column=0, row=4)
 		
 		# Thread allows the UI to continue to work while this runs
-		t = threading.Thread(target=EmailDrafter.generate_drafts, args=(self.email_list, self.template_editor.template_editor.template_editor.template, self.creds, self.drafting_progressbar))
+		t = threading.Thread(target=self.email_drafter.generate_drafts, args=(self.email_list, self.template_editor.template_editor.template_editor.template, self.creds, self.drafting_progressbar, self.error_button))
 		t.start()
+	
+	def view_errors(self):
+		if len(self.email_drafter.errors) > 1:
+			message = f"There were {len(self.email_drafter.errors)} error while sending E-mails. Would you like to save this to a file, so you can fix them and send them again?"
+		else:
+			message = f"There was {len(self.email_drafter.errors)} errors while sending E-mails. Would you like to save these to a file, so you can fix them and send them again?"
+		
+		if messagebox.askyesno("Errors", message):
+			error_output_path = filedialog.asksaveasfilename(title="Select where to save the list of failed E-mails", defaultextension=".json")
+			if error_output_path == None or error_output_path == '':
+				return
+			with open(error_output_path, "w") as error_file:
+				json.dump(self.email_drafter.errors, error_file)
 
 
 def main():

@@ -74,6 +74,7 @@ def get_creds(token_path, creds_path):
 
 def create_draft(creds, body):
 	"""Creates an email draft with the provided body"""
+	error_output = None
 	try:
 		# Create Gmail API client
 		service = build("gmail", "v1", credentials=creds)
@@ -84,7 +85,8 @@ def create_draft(creds, body):
 	except HttpError as error:
 		print(f"An error occurred: {error}")
 		draft = None
-	return draft
+		error_output = error
+	return [draft, error_output]
 
 
 def get_user_info(creds):
