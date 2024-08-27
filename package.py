@@ -10,5 +10,5 @@ PyInstaller.__main__.run([
     'E-mail Draft Generator',
     '--noconfirm',
     '--icon',
-    'icon.png',
+    'assets/icon.png',
 ])
