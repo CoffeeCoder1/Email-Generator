@@ -1,5 +1,7 @@
 # -*- mode: python ; coding: utf-8 -*-
 
+import importlib.metadata
+
 a = Analysis(
     ['src/email_draft_generator/gui/__main__.py'],
     pathex=[],
@@ -50,4 +52,5 @@ app = BUNDLE(
     name='E-mail Draft Generator.app',
     icon='assets/icon.png',
     bundle_identifier=None,
+    version=importlib.metadata.version('email-draft-generator'),
 )
