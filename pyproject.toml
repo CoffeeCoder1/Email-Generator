@@ -41,7 +41,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
-packaging = ["pyinstaller"]
+packaging = ["pyinstaller", "pillow"]
 
 [project.urls]
 "Homepage" = "https://github.com/CoffeeCoder1/Email-Generator"
