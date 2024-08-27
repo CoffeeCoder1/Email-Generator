@@ -18,7 +18,7 @@ class EmailDrafter:
 			for recipient in recipients:
 				draft = gmail.create_draft(creds, template.create_email_body(recipient))
 				if draft[1] != None:
-					self.errors.append(draft[1])
+					self.errors.append(recipient)
 					if error_button != None:
 						error_button.config(state='normal')
 				if progressbar != None:
