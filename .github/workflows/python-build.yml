@@ -42,7 +42,7 @@ jobs:
       - name: Install dependencies
         run: pip install .[packaging]
       - name: Build executable
-        run: python3 package.py
+        run: pyinstaller --noconfirm pyinstaller.spec
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
