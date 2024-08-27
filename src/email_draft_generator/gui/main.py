@@ -42,6 +42,11 @@ class App(tk.Frame):
 		frm = self
 		frm.grid()
 		
+		style = ttk.Style()
+		
+		# Error button style
+		style.map("Error.TButton", background=[("disabled", "red")])
+		
 		# Create a template editor and hide it
 		self.template_editor = TemplateEditorPopup(self)
 		self.template_editor.withdraw()
@@ -59,7 +64,7 @@ class App(tk.Frame):
 		ttk.Button(frm, text="Open", command=self.load_email_list).grid(column=1, row=2)
 		
 		ttk.Button(frm, text="Draft E-mails", command=self.send_emails).grid(column=0, row=3)
-		self.error_button = ttk.Button(frm, text="View Errors", command=self.view_errors, state='disabled')
+		self.error_button = ttk.Button(frm, text="View Errors", command=self.view_errors, state="disabled", style="Error.TButton")
 		self.error_button.grid(column=1, row=3)
 		
 		self.update_authenticate_label()
