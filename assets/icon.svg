@@ -27,30 +27,46 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="0.97097439"
-     inkscape:cx="201.85908"
-     inkscape:cy="85.996089"
+     inkscape:zoom="1.7599721"
+     inkscape:cx="176.99144"
+     inkscape:cy="201.42364"
      inkscape:window-width="1920"
      inkscape:window-height="1172"
      inkscape:window-x="0"
      inkscape:window-y="43"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer3"
+     inkscape:current-layer="layer1"
      showguides="false" />
   <defs
      id="defs1">
     <linearGradient
+       id="linearGradient1"
+       inkscape:collect="always">
+      <stop
+         style="stop-color:#cdcdcd;stop-opacity:1;"
+         offset="0"
+         id="stop1" />
+      <stop
+         style="stop-color:#ffffff;stop-opacity:1;"
+         offset="1"
+         id="stop2" />
+    </linearGradient>
+    <linearGradient
        id="linearGradient4">
       <stop
-         style="stop-color:#fafafa;stop-opacity:1;"
+         style="stop-color:#ef97ff;stop-opacity:1;"
          offset="0"
          id="stop9" />
       <stop
-         style="stop-color:#ffffff;stop-opacity:1;"
-         offset="0.06368564"
+         style="stop-color:#f187ff;stop-opacity:1;"
+         offset="0.02366398"
+         id="stop3" />
+      <stop
+         style="stop-color:#f47cff;stop-opacity:1;"
+         offset="0.04732796"
          id="stop10" />
       <stop
-         style="stop-color:#e5e5e5;stop-opacity:1;"
+         style="stop-color:#9b55aa;stop-opacity:1;"
          offset="1"
          id="stop8" />
     </linearGradient>
@@ -121,6 +137,15 @@
        x2="50.423676"
        y2="76.675323"
        gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1"
+       id="linearGradient2"
+       x1="48.741535"
+       y1="76.132828"
+       x2="48.741535"
+       y2="26.779068"
+       gradientUnits="userSpaceOnUse" />
   </defs>
   <g
      inkscape:label="Layer 1"
@@ -149,7 +174,7 @@
        inkscape:groupmode="layer"
        id="layer4"
        inkscape:label="Foreground"
-       transform="translate(-0.45344123,1.0435699)">
+       transform="matrix(0.91609648,0,0,0.91609648,3.3395348,5.9180452)">
       <g
          inkscape:groupmode="layer"
          id="layer3"
@@ -166,7 +191,7 @@
            sodipodi:type="rect"
            inkscape:label="shadow" />
         <rect
-           style="fill:#ffffff;fill-opacity:1;stroke:#000000;stroke-width:2.4136;stroke-linecap:round;stroke-dasharray:none"
+           style="fill:url(#linearGradient2);fill-opacity:1;stroke:#000000;stroke-width:2.4136;stroke-linecap:round;stroke-dasharray:none"
            id="rect1"
            width="75.24308"
            height="49.35376"
