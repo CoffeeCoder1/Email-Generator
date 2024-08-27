@@ -140,8 +140,8 @@ class App(tk.Frame):
 		if not hasattr(self, 'email_list'):
 			self.load_email_list()
 		
-		self.drafting_progressbar = ttk.Progressbar(self, orient='horizontal', maximum=len(self.email_list))
-		self.drafting_progressbar.grid(column=0, row=4)
+		self.drafting_progressbar = ttk.Progressbar(self, orient='horizontal', maximum=len(self.email_list), length=300)
+		self.drafting_progressbar.grid(column=0, row=4, columnspan=3)
 		
 		# Thread allows the UI to continue to work while this runs
 		t = threading.Thread(target=self.email_drafter.generate_drafts, args=(self.email_list, self.template_editor.template_editor.template_editor.template, self.creds, self.drafting_progressbar))
