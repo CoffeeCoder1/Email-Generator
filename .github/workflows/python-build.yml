@@ -31,7 +31,7 @@ jobs:
   pyinstaller:
     strategy:
       matrix:
-        os: ['ubuntu', 'windows', 'macos']
+        os: ['ubuntu', 'windows']
     runs-on: ${{ matrix.os }}-latest
     steps:
       - uses: actions/checkout@v4
@@ -48,6 +48,43 @@ jobs:
         with:
           name: package-${{ matrix.os }}
           path: dist/*
+
+  # Builds for MacOS binaries with pyinstaller (MacOS is different enough that it has to be a seperate step)
+  pyinstaller-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5.1.0
+        with:
+          python-version: '3.12'
+      - name: Install dependencies
+        run: |
+          pip install .[packaging]
+          brew update
+          brew install create-dmg
+      - name: Build executable
+        run: pyinstaller --noconfirm pyinstaller.spec
+      - name: Create DMG
+        run: |
+          mkdir -p dist/dmg
+          cp -r dist/*.app dist/dmg
+          create-dmg \
+            --volname "E-mail Draft Generator" \
+            --volicon "assets/icon.png" \
+            --window-pos 200 120 \
+            --window-size 600 300 \
+            --icon-size 100 \
+            --icon "E-mail Draft Generator.app" 175 120 \
+            --hide-extension "E-mail Draft Generator.app" \
+            --app-drop-link 425 120 \
+            "dist/E-mail Draft Generator.dmg" \
+            "dist/dmg/"
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v4.3.3
+        with:
+          name: package-macos
+          path: dist/*.dmg
   
   # Creates a release if the commit has a tag associated with it
   release:
