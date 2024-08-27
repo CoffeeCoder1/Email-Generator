@@ -49,7 +49,7 @@ jobs:
           brew update
           brew install create-dmg
           mkdir -p dist/dmg
-          cp -r dist/*.app dist/dmg
+          mv dist/*.app dist/dmg
           create-dmg \
             --volname "E-mail Draft Generator" \
             --volicon "assets/icon.png" \
@@ -61,6 +61,7 @@ jobs:
             --app-drop-link 425 120 \
             "dist/E-mail Draft Generator.dmg" \
             "dist/dmg/"
+          rm -r "dist/E-mail Draft Generator" "dist/dmg"
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
