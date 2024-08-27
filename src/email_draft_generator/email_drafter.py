@@ -9,18 +9,19 @@ from tkinter import ttk
 class EmailDrafter:
 	"""Utility class to draft E-mails"""
 	
-	def __init__(self):
+	def __init__(self, error_button: ttk.Button | None = None):
 		self.errors = []
+		self.error_button = error_button
 	
-	def generate_drafts(self, recipients, template: EmailTemplate, creds, progressbar: ttk.Progressbar | None = None, error_button: ttk.Button | None = None):
+	def generate_drafts(self, recipients, template: EmailTemplate, creds, progressbar: ttk.Progressbar | None = None):
 		self.errors = []
 		with concurrent.futures.ProcessPoolExecutor() as executor:
 			for recipient in recipients:
 				draft = gmail.create_draft(creds, template.create_email_body(recipient))
 				if draft[1] != None:
 					self.errors.append(recipient)
-					if error_button != None:
-						error_button.config(state='normal')
+					if self.error_button != None:
+						self.error_button.config(state='normal')
 				if progressbar != None:
 					progressbar.step()
 		if progressbar != None:

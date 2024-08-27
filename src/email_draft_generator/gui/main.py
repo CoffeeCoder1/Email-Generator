@@ -64,7 +64,7 @@ class App(tk.Frame):
 		
 		self.update_authenticate_label()
 		
-		self.email_drafter = EmailDrafter()
+		self.email_drafter = EmailDrafter(self.error_button)
 	
 	def authenticate_button_callback(self):
 		"""Callback for the authentication button, logs out if already authenticated."""
@@ -144,7 +144,7 @@ class App(tk.Frame):
 		self.drafting_progressbar.grid(column=0, row=4)
 		
 		# Thread allows the UI to continue to work while this runs
-		t = threading.Thread(target=self.email_drafter.generate_drafts, args=(self.email_list, self.template_editor.template_editor.template_editor.template, self.creds, self.drafting_progressbar, self.error_button))
+		t = threading.Thread(target=self.email_drafter.generate_drafts, args=(self.email_list, self.template_editor.template_editor.template_editor.template, self.creds, self.drafting_progressbar))
 		t.start()
 	
 	def view_errors(self):
