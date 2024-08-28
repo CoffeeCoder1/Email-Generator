@@ -229,7 +229,10 @@ class TemplateEditorWindow(tk.Frame):
 			
 			# Parse template
 			with open(self.template_path) as template_file:
-				self.template_editor.set_template(EmailTemplate.from_file(template_file))
+				try:
+					self.template_editor.set_template(EmailTemplate.from_file(template_file))
+				except Exception as ex:
+					messagebox.showerror(message=str(ex))
 			
 			self.parent.wm_title("Template Editor - " + os.path.basename(self.template_path))
 	
