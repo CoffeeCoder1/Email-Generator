@@ -50,7 +50,7 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='E-mail Draft Generator.app',
-    icon='assets/icon.png',
+    icon='assets/icon_macos.png',
     bundle_identifier=None,
     version=importlib.metadata.version('email-draft-generator'),
 )

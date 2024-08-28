@@ -28,14 +28,14 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="1.7599721"
-     inkscape:cx="163.35486"
-     inkscape:cy="157.10476"
+     inkscape:cx="176.99144"
+     inkscape:cy="201.42364"
      inkscape:window-width="1920"
      inkscape:window-height="1172"
      inkscape:window-x="0"
      inkscape:window-y="43"
      inkscape:window-maximized="1"
-     inkscape:current-layer="layer4"
+     inkscape:current-layer="layer1"
      showguides="false" />
   <defs
      id="defs1">
@@ -107,6 +107,15 @@
        stroke_width_bottom="1"
        front_thickness="1"
        back_thickness="0.25" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient4"
+       id="linearGradient5"
+       x1="45.406429"
+       y1="12.464913"
+       x2="45.406429"
+       y2="103.2169"
+       gradientUnits="userSpaceOnUse" />
     <filter
        style="color-interpolation-filters:sRGB"
        id="filter5"
@@ -143,11 +152,29 @@
      inkscape:groupmode="layer"
      id="layer1"
      transform="matrix(0.88120635,0,0,0.88120635,9.9875689,-0.96977556)">
+    <rect
+       style="fill:#000000;fill-opacity:0.4879154;stroke:none;stroke-width:1.90579;stroke-linecap:round;stroke-miterlimit:13.4;filter:url(#filter5)"
+       id="rect7"
+       width="90.751991"
+       height="90.751991"
+       x="0.030430879"
+       y="13.599435"
+       ry="14.358887"
+       inkscape:label="Shadow" />
+    <rect
+       style="fill:url(#linearGradient5);fill-opacity:1;stroke:none;stroke-width:1.90579;stroke-linecap:round;stroke-miterlimit:13.4"
+       id="rect3"
+       width="90.751991"
+       height="90.751991"
+       x="0.030430879"
+       y="12.464913"
+       ry="14.358887"
+       inkscape:label="Background" />
     <g
        inkscape:groupmode="layer"
        id="layer4"
        inkscape:label="Foreground"
-       transform="matrix(1.1745591,0,0,1.1745591,-8.3446292,-9.09765)">
+       transform="matrix(0.91609648,0,0,0.91609648,3.3395348,5.9180452)">
       <g
          inkscape:groupmode="layer"
          id="layer3"
