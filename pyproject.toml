@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "email_draft_generator"
-version = "0.0.4"
+version = "0.1.0"
 description = "A utility to generate E-mail drafts from a list of E-mail addresses."
 readme = "README.md"
 license = { file = "LICENSE" }
