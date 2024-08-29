@@ -70,7 +70,7 @@ jobs:
   
   # Creates a release if the commit has a tag associated with it
   release:
-    needs: build
+    needs: [build, pyinstaller]
     if: startsWith(github.ref, 'refs/tags/')
     runs-on: ubuntu-latest
     steps:
@@ -78,7 +78,6 @@ jobs:
     - name: Download build
       uses: actions/download-artifact@v4.1.7
       with:
-        name: distribution-archives
         path: dist
     - name: Create release
       uses: softprops/action-gh-release@v2
