@@ -66,7 +66,7 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           mkdir release-archives
-          tar -czvf release-archives/email-draft-generator-linux-x86_64.tar.gz -C dist
+          tar -czvf release-archives/email-draft-generator-linux-x86_64.tar.gz -C dist .
           rm -r "dist/E-mail Draft Generator"
           cp release-archives/*.tar.gz dist
       - name: Upload a Build Artifact
