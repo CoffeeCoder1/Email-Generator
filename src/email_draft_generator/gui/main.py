@@ -5,6 +5,8 @@ import os
 import concurrent.futures
 from pathlib import Path
 import threading
+from PIL import ImageTk
+import platform
 
 import tkinter as tk
 from tkinter import ttk
@@ -166,5 +168,14 @@ def main():
 	root = tk.Tk()
 	root.title("E-mail Generator")
 	root.resizable(False, False)
+	
+	# App icon
+	if platform.system() == 'Darwin':  # Show a different icon on MacOS than anywhere else
+		icon_file = 'assets/icon_macos.png'
+	else:
+		icon_file = 'assets/icon.png'
+	photo = ImageTk.PhotoImage(file=icon_file)
+	root.wm_iconphoto(False, photo)  # type: ignore
+	
 	app = App(root)
 	app.mainloop()
