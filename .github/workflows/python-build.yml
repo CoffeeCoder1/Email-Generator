@@ -43,7 +43,7 @@ jobs:
         run: pip install .[packaging]
       - name: Build executable
         run: pyinstaller --noconfirm pyinstaller.spec
-      - name: Create DMG
+      - name: Create .dmg
         if: runner.os == 'macOS'
         run: |
           brew update
@@ -69,6 +69,11 @@ jobs:
           tar -czvf release-archives/email-draft-generator-linux-x86_64.tar.gz -C dist .
           rm -r "dist/E-mail Draft Generator"
           cp release-archives/*.tar.gz dist
+      - name: Create .zip
+        if: runner.os == 'Windows'
+        run: !
+          Compress-Archive -Path "dist\E-mail Draft Generator" -DestinationPath email-draft-generator-windows-x86_64.zip
+          move email-draft-generator-windows-x86_64.zip dist
       - name: Create self-extracting executable
         if: runner.os == 'Windows'
         run: |
