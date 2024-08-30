@@ -2,8 +2,10 @@ import fileinput
 import json
 import mimetypes
 import os
+from os import path
 import concurrent.futures
 from pathlib import Path
+import sys
 import threading
 from PIL import ImageTk
 import platform
@@ -174,6 +176,10 @@ def main():
 		icon_file = 'assets/icon_macos.png'
 	else:
 		icon_file = 'assets/icon.png'
+	
+	if getattr(sys, 'frozen', False) and hasattr(sys, '_MEIPASS'):
+		icon_file = path.join(path.dirname(__file__), icon_file)
+	
 	photo = ImageTk.PhotoImage(file=icon_file)
 	root.wm_iconphoto(False, photo)  # type: ignore
 	

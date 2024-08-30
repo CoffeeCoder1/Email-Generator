@@ -2,11 +2,16 @@
 
 import importlib.metadata
 
+added_files = [
+    ('assets/icon.png', 'email_draft_generator/gui/assets'),
+    ('assets/icon_macos.png', 'email_draft_generator/gui/assets'),
+]
+
 a = Analysis(
     ['src/email_draft_generator/gui/__main__.py'],
     pathex=[],
     binaries=[],
-    datas=[],
+    datas=added_files,
     hiddenimports=[],
     hookspath=[],
     hooksconfig={},
