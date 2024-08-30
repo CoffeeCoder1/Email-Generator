@@ -71,7 +71,7 @@ jobs:
           cp release-archives/*.tar.gz dist
       - name: Create .zip
         if: runner.os == 'Windows'
-        run: !
+        run: |
           Compress-Archive -Path "dist\E-mail Draft Generator" -DestinationPath email-draft-generator-windows-x86_64.zip
           move email-draft-generator-windows-x86_64.zip dist
       - name: Create self-extracting executable
