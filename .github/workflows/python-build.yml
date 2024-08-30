@@ -69,6 +69,11 @@ jobs:
           tar -czvf release-archives/email-draft-generator-linux-x86_64.tar.gz -C dist .
           rm -r "dist/E-mail Draft Generator"
           cp release-archives/*.tar.gz dist
+      - name: Create self-extracting executable
+        if: runner.os == 'Windows'
+        run: |
+          "C:\Program Files\7-Zip\7z.exe" a email-draft-generator-windows-sfx-x86_64.exe -mx5 -sfx7z.sfx "dist\E-mail Draft Generator"
+          move email-draft-generator-windows-sfx-x86_64.exe dist
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v4.3.3
         with:
